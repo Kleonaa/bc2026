@@ -1,86 +1,80 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sekta Bootcamp 2026</title>
+    <title>BC 2026</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
         <div class="title-block">
-          <p class="eyebrow">Personal tracker</p>
-          <h1>Sekta Bootcamp 2026</h1>
+          <p class="eyebrow">Личный трекер</p>
+          <h1>BC 2026</h1>
         </div>
         <div class="progress-panel" aria-live="polite">
           <div class="progress-ring" id="progressRing">
             <span id="progressPercent">0%</span>
           </div>
           <div>
-            <p class="progress-label">Completed</p>
-            <p class="progress-count" id="progressCount">0 / 0 trainings</p>
+            <p class="progress-label">Выполнено</p>
+            <p class="progress-count" id="progressCount">0 / 0 тренировок</p>
           </div>
         </div>
       </header>
 
       <main class="layout">
-        <aside class="sidebar" aria-label="Training filters">
+        <aside class="sidebar" aria-label="Фильтры тренировок">
           <div class="search-box">
-            <label for="searchInput">Search</label>
-            <input id="searchInput" type="search" placeholder="coach, muscle, exercise...">
+            <label for="searchInput">Поиск</label>
+            <input id="searchInput" type="search" placeholder="тренер, мышцы, упражнение...">
           </div>
 
           <div class="filter-group">
-            <p class="filter-title">Week</p>
+            <p class="filter-title">Неделя</p>
             <div class="segmented" id="weekFilters"></div>
           </div>
 
           <div class="filter-group">
-            <p class="filter-title">Type</p>
+            <p class="filter-title">Тип</p>
             <div class="segmented vertical" id="typeFilters"></div>
           </div>
 
           <div class="filter-group">
-            <p class="filter-title">Status</p>
+            <p class="filter-title">Статус</p>
             <div class="segmented vertical" id="statusFilters">
-              <button type="button" class="is-active" data-status="all">All</button>
-              <button type="button" data-status="open">Open</button>
-              <button type="button" data-status="done">Done</button>
-              <button type="button" data-status="rated">Rated</button>
+              <button type="button" class="is-active" data-status="all">Все</button>
+              <button type="button" data-status="open">Не сделано</button>
+              <button type="button" data-status="done">Сделано</button>
+              <button type="button" data-status="rated">Оценено</button>
             </div>
           </div>
-
-          <label class="switch-row">
-            <input id="videoOnly" type="checkbox">
-            <span>Has video</span>
-          </label>
-
-          <button class="next-button" type="button" id="nextTrainingButton">Next open training</button>
+          <button class="next-button" type="button" id="nextTrainingButton">Следующая тренировка</button>
         </aside>
 
         <section class="content">
           <div class="stats-grid" aria-live="polite">
             <div class="stat">
               <span class="stat-value" id="visibleCount">0</span>
-              <span class="stat-label">Showing</span>
+              <span class="stat-label">Показано</span>
             </div>
             <div class="stat">
               <span class="stat-value" id="videoCount">0</span>
-              <span class="stat-label">Videos</span>
+              <span class="stat-label">Видео</span>
             </div>
             <div class="stat">
               <span class="stat-value" id="averageRating">-</span>
-              <span class="stat-label">Avg stars</span>
+              <span class="stat-label">Средняя оценка</span>
             </div>
             <div class="stat">
               <span class="stat-value" id="totalTime">0m</span>
-              <span class="stat-label">Visible time</span>
+              <span class="stat-label">Время</span>
             </div>
           </div>
 
           <div class="day-list" id="dayList"></div>
-          <p class="empty-state" id="emptyState" hidden>No trainings match these filters.</p>
+          <p class="empty-state" id="emptyState" hidden>По этим фильтрам тренировок нет.</p>
         </section>
       </main>
     </div>

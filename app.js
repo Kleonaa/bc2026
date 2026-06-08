@@ -6,7 +6,6 @@ const state = {
   type: "all",
   status: "all",
   query: "",
-  videoOnly: false,
   progress: loadProgress(),
 };
 
@@ -15,7 +14,6 @@ const elements = {
   typeFilters: document.querySelector("#typeFilters"),
   statusFilters: document.querySelector("#statusFilters"),
   searchInput: document.querySelector("#searchInput"),
-  videoOnly: document.querySelector("#videoOnly"),
   dayList: document.querySelector("#dayList"),
   emptyState: document.querySelector("#emptyState"),
   progressRing: document.querySelector("#progressRing"),
@@ -65,14 +63,14 @@ function renderFilterButtons() {
   const weeks = ["all", ...new Set(data.days.map((day) => day.week))];
   elements.weekFilters.innerHTML = weeks
     .map((week) => {
-      const label = week === "all" ? "All" : `Week ${week}`;
+      const label = week === "all" ? "Все" : `Неделя ${week}`;
       return `<button type="button" class="${week === "all" ? "is-active" : ""}" data-week="${week}">${label}</button>`;
     })
     .join("");
 
   elements.typeFilters.innerHTML = trainingTypes
     .map((type) => {
-      const label = type === "all" ? "All" : type;
+      const label = type === "all" ? "Все" : type;
       return `<button type="button" class="${type === "all" ? "is-active" : ""}" data-type="${escapeAttr(type)}">${escapeHtml(label)}</button>`;
     })
     .join("");
@@ -107,12 +105,6 @@ function bindEvents() {
     state.query = event.target.value.trim().toLowerCase();
     render();
   });
-
-  elements.videoOnly.addEventListener("change", (event) => {
-    state.videoOnly = event.target.checked;
-    render();
-  });
-
   elements.nextTrainingButton.addEventListener("click", () => {
     const next = allTrainings.find((training) => !getProgress(training.id).done);
     if (!next) return;
@@ -145,7 +137,7 @@ function bindEvents() {
       const card = details.closest(".training-card");
       const description = card.querySelector(".description");
       const open = description.classList.toggle("is-open");
-      details.textContent = open ? "Hide details" : "Details";
+      details.textContent = open ? "Скрыть" : "Описание";
     }
   });
 }
@@ -155,9 +147,7 @@ function clearFiltersForTraining(training) {
   state.type = "all";
   state.status = "all";
   state.query = "";
-  state.videoOnly = false;
   elements.searchInput.value = "";
-  elements.videoOnly.checked = false;
   setButtonByData(elements.weekFilters, "week", state.week);
   setButtonByData(elements.typeFilters, "type", state.type);
   setButtonByData(elements.statusFilters, "status", state.status);
@@ -205,7 +195,6 @@ function matchesFilters(training) {
 
   if (state.week !== "all" && String(training.week) !== state.week) return false;
   if (state.type !== "all" && training.title !== state.type) return false;
-  if (state.videoOnly && !training.videoUrl) return false;
   if (state.query && !haystack.includes(state.query)) return false;
   if (state.status === "done" && !progress.done) return false;
   if (state.status === "open" && progress.done) return false;
@@ -228,7 +217,7 @@ function renderStats(filteredDays) {
 
   elements.progressRing.style.setProperty("--progress", `${percent}%`);
   elements.progressPercent.textContent = `${percent}%`;
-  elements.progressCount.textContent = `${done} / ${total} trainings`;
+  elements.progressCount.textContent = `${done} / ${total} тренировок`;
   elements.visibleCount.textContent = visible.length;
   elements.videoCount.textContent = visible.filter((training) => training.videoUrl).length;
   elements.averageRating.textContent = average;
@@ -248,8 +237,8 @@ function renderDay(day) {
   return `
     <section class="day-section">
       <div class="day-heading">
-        <h2>${escapeHtml(day.weekName)}, day ${day.day}</h2>
-        <span class="day-progress">${done} / ${day.items.length} done</span>
+        <h2>${escapeHtml(day.weekName)}, день ${day.day}</h2>
+        <span class="day-progress">${done} / ${day.items.length} сделано</span>
       </div>
       <div class="training-grid">
         ${day.items.map(renderTraining).join("")}
@@ -268,29 +257,29 @@ function renderTraining(training) {
       <div class="card-top">
         <div class="card-title-row">
           <h3>${escapeHtml(training.title)}</h3>
-          <span class="duration">${escapeHtml(training.duration || "No time")}</span>
+          <span class="duration">${escapeHtml(training.duration || "Без времени")}</span>
         </div>
-        <p class="summary">${escapeHtml(training.summary || "No short description yet.")}</p>
+        <p class="summary">${escapeHtml(training.summary || "Пока нет короткого описания.")}</p>
       </div>
 
       <div class="meta-grid">
-        ${metaLine("Coach", training.coach)}
-        ${metaLine("Equipment", training.equipment)}
+        ${metaLine("Тренер", training.coach)}
+        ${metaLine("Оборудование", training.equipment)}
         ${muscles ? `<div class="chip-row">${muscles}</div>` : ""}
       </div>
 
       <div class="card-actions">
         <label class="done-toggle">
           <input type="checkbox" data-done="${escapeAttr(training.id)}" ${progress.done ? "checked" : ""}>
-          <span>Done</span>
+          <span>Сделано</span>
         </label>
-        <div class="stars" aria-label="Rating for ${escapeAttr(training.title)}">
+        <div class="stars" aria-label="Оценка: ${escapeAttr(training.title)}">
           ${[1, 2, 3, 4, 5].map((rating) => renderStar(training.id, rating, progress.rating)).join("")}
         </div>
       </div>
 
       <div class="secondary-actions">
-        <button class="details-button" type="button" data-details="${escapeAttr(training.id)}">Details</button>
+        <button class="details-button" type="button" data-details="${escapeAttr(training.id)}">Описание</button>
         ${renderVideoLink(training)}
       </div>
 
@@ -316,20 +305,20 @@ function renderStar(trainingId, rating, currentRating) {
       type="button"
       data-training="${escapeAttr(trainingId)}"
       data-rating="${rating}"
-      aria-label="${rating} stars"
-      title="${rating} stars"
+      aria-label="${rating} звёзд"
+      title="${rating} звёзд"
     >★</button>
   `;
 }
 
 function renderVideoLink(training) {
   if (!training.videoUrl) {
-    return `<span class="video-link is-missing">Video later</span>`;
+    return `<span class="video-link is-missing">Видео позже</span>`;
   }
 
   return `
     <a class="video-link" href="${escapeAttr(training.videoUrl)}" target="_blank" rel="noreferrer">
-      Open video
+      Открыть видео
     </a>
   `;
 }
@@ -341,11 +330,11 @@ function durationToMinutes(duration) {
 }
 
 function formatMinutes(value) {
-  if (!value) return "0m";
+  if (!value) return "0м";
   const minutes = Math.round(value);
   const hours = Math.floor(minutes / 60);
   const rest = minutes % 60;
-  return hours ? `${hours}h ${rest}m` : `${rest}m`;
+  return hours ? `${hours}ч ${rest}м` : `${rest}м`;
 }
 
 function escapeHtml(value) {
