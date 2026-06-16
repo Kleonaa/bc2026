@@ -458,6 +458,40 @@ window.SEKTA_TRAINING_DATA = {
           "sourceUrl": "https://sektaschool.ru/courses/sezonnyi-kurs-bootcamp-2026/1/6",
           "videoFile": "1-6-Blackbox.mp4",
           "videoUrl": "https://drive.google.com/file/d/1BDiYzIpVQHf_dDAtjfr4CptHCe2_DIuK/view?usp=drivesdk"
+        },
+        {
+          "week": 1,
+          "weekName": "Первая неделя",
+          "day": 6,
+          "sourceUrl": "https://sektaschool.ru/courses/sezonnyi-kurs-bootcamp-2026/1/6",
+          "muscles": [],
+          "equipment": "Тренажёрный зал",
+          "duration": "",
+          "description": "Самостоятельный план для тренажёрного зала. Открой файл и выполняй упражнения в своём темпе, ориентируясь на самочувствие и технику.",
+          "id": "1-6-4-gym-lower-body",
+          "index": 4,
+          "title": "Зал: низ",
+          "coach": "Самостоятельно",
+          "summary": "План самостоятельной тренировки в зале на нижнюю часть тела.",
+          "videoFile": "1-6-Gym lower body.mp4",
+          "videoUrl": "https://drive.google.com/file/d/1PQEq30qNvQLaoZeo8RiffMEBJAnyslAe/view?usp=drivesdk"
+        },
+        {
+          "week": 1,
+          "weekName": "Первая неделя",
+          "day": 6,
+          "sourceUrl": "https://sektaschool.ru/courses/sezonnyi-kurs-bootcamp-2026/1/6",
+          "muscles": [],
+          "equipment": "Тренажёрный зал",
+          "duration": "",
+          "description": "Самостоятельный план для тренажёрного зала. Открой файл и выполняй упражнения в своём темпе, ориентируясь на самочувствие и технику.",
+          "id": "1-6-5-gym-upper-body",
+          "index": 5,
+          "title": "Зал: верх",
+          "coach": "Самостоятельно",
+          "summary": "План самостоятельной тренировки в зале на верхнюю часть тела.",
+          "videoFile": "1-6-Gym upper body.mp4",
+          "videoUrl": "https://drive.google.com/file/d/1EksPwBHBzUHvl8Vbp4XTpS6flCcJr_nf/view?usp=drivesdk"
         }
       ]
     },
