@@ -28,6 +28,7 @@ const elements = {
 
 const allTrainings = data.days.flatMap((day) => day.items);
 const trainingTypes = ["all", ...new Set(allTrainings.map((item) => item.title))];
+trainingTypes.splice(trainingTypes.indexOf("Основная") + 1, 0, "dumbbells");
 
 init();
 
@@ -70,7 +71,7 @@ function renderFilterButtons() {
 
   elements.typeFilters.innerHTML = trainingTypes
     .map((type) => {
-      const label = type === "all" ? "Все" : type;
+      const label = type === "all" ? "Все" : type === "dumbbells" ? "Гантели" : type;
       return `<button type="button" class="${type === "all" ? "is-active" : ""}" data-type="${escapeAttr(type)}">${escapeHtml(label)}</button>`;
     })
     .join("");
@@ -194,7 +195,10 @@ function matchesFilters(training) {
     .toLowerCase();
 
   if (state.week !== "all" && String(training.week) !== state.week) return false;
-  if (state.type !== "all" && training.title !== state.type) return false;
+  if (state.type === "dumbbells") {
+    const equipmentAndDescription = [training.equipment, training.summary, training.description].join(" ");
+    if (!/гантел/iu.test(equipmentAndDescription)) return false;
+  } else if (state.type !== "all" && training.title !== state.type) return false;
   if (state.query && !haystack.includes(state.query)) return false;
   if (state.status === "done" && !progress.done) return false;
   if (state.status === "open" && progress.done) return false;
